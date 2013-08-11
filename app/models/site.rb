@@ -6,6 +6,7 @@ class Site < ActiveRecord::Base
 
 	before_create :generate_api_key!
 
+	private
 	def generate_api_key!
 		key = nil
 		begin
