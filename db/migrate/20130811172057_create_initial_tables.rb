@@ -1,20 +1,22 @@
 class CreateInitialTables < ActiveRecord::Migration
 	def change
 		create_table :sites do |t|
-			t.references :owner, null: false
+			t.references :owner, null: false, index: true
+			t.string :name, null: false
+			t.string :domain, null: false
 			t.string :api_key, null: false
 			t.timestamps
 		end
 
 		create_table :visitors do |t|
-			t.references :site, null: false
+			t.references :site, null: false, index: true
 			t.string :uid, null: false
 			t.boolean :is_paid_source, null: false, default: false
 			t.timestamps
 		end
 
 		create_table :visits do |t|
-			t.references :visit, null: false
+			t.references :visit, null: false, index: true
 			t.string :referrer
 			t.string :gclid
 			t.string :utm_source
@@ -23,7 +25,7 @@ class CreateInitialTables < ActiveRecord::Migration
 		end
 
 		create_table :events do |t|
-			t.references :visitor
+			t.references :visitor, null: false, index: true
 			t.string :referrer
 			t.string :current_url
 			t.timestamps

@@ -14,19 +14,25 @@
 ActiveRecord::Schema.define(version: 20130811172057) do
 
   create_table "events", force: true do |t|
-    t.integer  "visitor_id"
+    t.integer  "visitor_id",  null: false
     t.string   "referrer"
     t.string   "current_url"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "events", ["visitor_id"], name: "index_events_on_visitor_id"
+
   create_table "sites", force: true do |t|
     t.integer  "owner_id",   null: false
+    t.string   "name",       null: false
+    t.string   "domain",     null: false
     t.string   "api_key",    null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "sites", ["owner_id"], name: "index_sites_on_owner_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -58,6 +64,8 @@ ActiveRecord::Schema.define(version: 20130811172057) do
     t.datetime "updated_at"
   end
 
+  add_index "visitors", ["site_id"], name: "index_visitors_on_site_id"
+
   create_table "visits", force: true do |t|
     t.integer  "visit_id",    null: false
     t.string   "referrer"
@@ -67,5 +75,7 @@ ActiveRecord::Schema.define(version: 20130811172057) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "visits", ["visit_id"], name: "index_visits_on_visit_id"
 
 end
